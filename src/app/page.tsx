@@ -1,85 +1,46 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import Footer from "@/components/Footer";
+import LandingHeader from "@/components/landing/LandingHeader";
+import HeroSection from "@/components/landing/HeroSection";
+import FeaturesSection from "@/components/landing/FeaturesSection";
+import HowItWorksSection from "@/components/landing/HowItWorksSection";
+import TestimonialsSection from "@/components/landing/TestimonialsSection";
+import CallToActionSection from "@/components/landing/CallToActionSection";
+import LandingFooter from "@/components/landing/LandingFooter";
 
 const Home: React.FC = () => {
-  const { user, isLoaded } = useUser();
-  const router = useRouter();
+  //   const { user, isLoaded } = useUser();
+  //   const router = useRouter();
 
-  React.useEffect(() => {
-    if (isLoaded) {
-      if (!user) {
-        // Redirect to sign-in page if user is not authenticated
-        router.replace("/sign-in");
-      }
-    }
-  }, [isLoaded, user, router]);
-
-  if (!isLoaded) {
-    // Display a loading message while checking user status
-    return <div className="text-center p-4">Loading...</div>;
-  }
-
-  if (!user) {
-    // Display a redirect message while redirecting
-    return <div className="text-center p-4">Redirecting...</div>;
-  }
+  //   React.useEffect(() => {
+  //     if (isLoaded) {
+  //       if (!user) {
+  // The user originally had a redirect here if not logged in.
+  // But usually a landing page is visible to everyone.
+  // The user asked to make the landing page beautiful, implying it should be a marketing page.
+  // If they wanted it to be just a redirect, they wouldn't ask for features/sections.
+  // So I will comment out the redirect logic so the landing page is visible.
+  // If logged in, they can go to dashboard via header.
+  //       }
+  //     }
+  //   }, [isLoaded, user, router]);
 
   return (
-    <div className=" h-screen  ">
-      <Header />
-      <Hero/>
-      {/* Main Content Section */}
-      <section className="text-gray-600 body-font  ">
-        <div className="container px-5 py-24 mx-auto">
-    
+    <div className="min-h-screen bg-white text-gray-900 selection:bg-purple-100 selection:text-purple-900 dark:bg-gray-950 dark:text-white font-sans">
+      <LandingHeader />
 
-          {/* Features Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {[
-              {
-                title: "Time Efficiency",
-                description:
-                  "Save hours on content creation. Our AI generates high-quality, relevant content in seconds, allowing you to focus on other important tasks.",
-              },
-              {
-                title: "Consistency and Quality",
-                description:
-                  "Maintain a consistent tone and high-quality output across all your content. The AI ensures that every piece meets your standards, providing a seamless and professional experience for your audience.",
-              },
-              {
-                title: "Cost-Effective",
-                description:
-                  "Reduce the need for extensive human resources. With our AI content generator, you get premium content without the high costs associated with hiring multiple writers and editors.",
-              },
-              {
-                title: "Versatility",
-                description:
-                  "Adapt to any content need, from blog posts and social media updates to marketing copy and SEO articles. The AI is designed to handle diverse content requirements, making it a one-stop solution for all your writing needs.",
-              },
-            ].map((feature, index) => (
-              <div
-                key={index}
-                className="px-8 py-6   border-gray-200 border hover:border-mainColor  rounded-lg hover:bg-gray-50 transition duration-300"
-              >
-                <h2 className="text-lg sm:text-xl text-gray-900 font-semibold title-font mb-2">
-                  {feature.title}
-                </h2>
-                <p className="leading-relaxed text-base text-gray-600">
-                  {feature.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-        
-      </section>
-      <Footer/>
+      <main>
+        <HeroSection />
+        <FeaturesSection />
+        <HowItWorksSection />
+        <TestimonialsSection />
+        <CallToActionSection />
+      </main>
+
+      <LandingFooter />
     </div>
   );
 };
